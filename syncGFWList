@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# install wget
+if ! [ -x "$(command -v wget)" ];then
+brew install wget
+fi
+
+# download gfwlist.txt
+wget https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+
+# install gfwlist2pac
+if ! [ -x "$(command -v gfwlist2pac)" ];then
+brew install gfwlist2pac
+fi
+
+# convert gfwlist to pac
+gfwlist2pac -i gfwlist.txt -f gfwlist.js -p "SOCKS5 127.0.0.1:1080;"
+
+# delete gfwlist.txt
+rm gfwlist.txt
+
+# move gfwlist.js to ~/.ShadowsocksX/ 
+mv gfwlist.js ~/.ShadowsocksX/ 
